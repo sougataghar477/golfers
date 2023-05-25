@@ -29,7 +29,7 @@ function MemberInput(props){
             else{fetch("http://localhost:3000/api/createMember",{method: "POST",  headers: {
                 "Content-Type": "application/json",
                 // 'Content-Type': 'application/x-www-form-urlencoded',
-              },body: JSON.stringify(form.values)})
+              },body: JSON.stringify({...form.values,pid:Number(form.values.pid)})})
 
             }
  }}>
@@ -38,7 +38,7 @@ function MemberInput(props){
       withAsterisk {...form.getInputProps('name')}/>
       <TextInput withAsterisk placeholder='Your email' readOnly={a==='member'?true:false} label='Email' {...form.getInputProps('email')}/>
       <TextInput withAsterisk placeholder='Your ID' readOnly={a==='member'?true:false} label='ID' {...form.getInputProps('pid')}/>
-      {form.values.pid && <Button mr={16} onClick={function(){setA(false); }} >Edit</Button>}
+      {props.page==='member' && <Button mr={16} onClick={function(){setA(false); }} >Edit</Button>}
         <Button mt={20} type='submit'  >Submit</Button>
     </form>
     </Box>
