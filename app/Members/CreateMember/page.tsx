@@ -3,6 +3,6 @@ import MemberInput from "../../../components/MemberInput";
 import { useRouter } from 'next/navigation';
 function CreateMember(){
     let router=useRouter();
-    return <MemberInput router={false}/>
+    return <MemberInput page='createMember'/>
 }
 export default CreateMember;

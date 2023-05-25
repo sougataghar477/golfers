@@ -24,7 +24,7 @@ getApiData();
     return <>
 <Link href={'/Members'}>Members</Link>
 <h1>Welcome member {params.id}</h1>
-{books && <MemberInput router={true} data={books[0]}/>}
+{books && <MemberInput page={'member'} data={books[0]}/>}
 
 
     </>

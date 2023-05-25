@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { TextInput ,Box,Button} from '@mantine/core';
 function MemberInput(props){
     const [editable,setEdit]=useState(false);
-    let [a,setA]=useState(props.router);
+    let [a,setA]=useState(props.page);
     const form = useForm(props.data?{
         initialValues: {
           name:props.data.name,
@@ -18,19 +18,28 @@ function MemberInput(props){
         },
       });
     return <Box w='320px' m='auto'>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput placeholder="Your name"
-      label="Full name" readOnly={a}
-      withAsterisk {...form.getInputProps('name')}/>
-      <TextInput withAsterisk placeholder='Your email' readOnly={a} label='Email' {...form.getInputProps('email')}/>
-      <TextInput withAsterisk placeholder='Your ID' readOnly={a} label='ID' {...form.getInputProps('pid')}/>
-      {form.values.pid && <Button mr={16} onClick={function(){setA(false);console.log(8)}} >Edit</Button>}
-        <Button mt={20} type='submit' onClick={function(){
-            fetch("http://localhost:3000/api/updateBooks",{method: "POST",headers: {
+        <form onSubmit={function(e){
+            e.preventDefault();
+            if(props.page==='member'){
+                form.onSubmit((values) => console.log(values));fetch("http://localhost:3000/api/updateBooks",{method: "POST",  headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                  },body: JSON.stringify(form.values)})
+            }
+            else{fetch("http://localhost:3000/api/createMember",{method: "POST",  headers: {
                 "Content-Type": "application/json",
                 // 'Content-Type': 'application/x-www-form-urlencoded',
               },body: JSON.stringify(form.values)})
-        }}>Submit</Button>
+
+            }
+ }}>
+        <TextInput placeholder="Your name"
+      label="Full name"readOnly={a==='member'?true:false}
+      withAsterisk {...form.getInputProps('name')}/>
+      <TextInput withAsterisk placeholder='Your email' readOnly={a==='member'?true:false} label='Email' {...form.getInputProps('email')}/>
+      <TextInput withAsterisk placeholder='Your ID' readOnly={a==='member'?true:false} label='ID' {...form.getInputProps('pid')}/>
+      {form.values.pid && <Button mr={16} onClick={function(){setA(false); }} >Edit</Button>}
+        <Button mt={20} type='submit'  >Submit</Button>
     </form>
     </Box>
 }
