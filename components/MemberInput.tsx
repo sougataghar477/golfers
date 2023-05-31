@@ -24,7 +24,7 @@ function MemberInput(props){
                 form.onSubmit((values) => console.log(values));fetch("http://localhost:3000/api/updateBooks",{method: "POST",  headers: {
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                  },body: JSON.stringify(form.values)})
+                  },body: JSON.stringify({...form.values,pid:Number(form.values.pid)})})
             }
             else{fetch("http://localhost:3000/api/createMember",{method: "POST",  headers: {
                 "Content-Type": "application/json",
